@@ -48,10 +48,13 @@ class SearchWidget<T> extends StatefulWidget {
   final OnItemSelected<T> onItemSelected;
 
   @override
-  MySingleChoiceSearchState<T> createState() => MySingleChoiceSearchState<T>();
+  MySingleChoiceSearchState<T> createState() => MySingleChoiceSearchState<T>(padding);
 }
 
 class MySingleChoiceSearchState<T> extends State<SearchWidget<T>> {
+
+  MySingleChoiceSearchState(this.padding);
+
   final _controller = TextEditingController();
   List<T> _list;
   List<T> _tempList;
