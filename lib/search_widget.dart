@@ -5,6 +5,8 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
 import 'widget/no_item_found.dart';
 
+const kDefaultPadding = 20.0;
+
 typedef QueryListItemBuilder<T> = Widget Function(T item);
 typedef OnItemSelected<T> = void Function(T item);
 typedef SelectedItemBuilder<T> = Widget Function(
@@ -141,37 +143,39 @@ class MySingleChoiceSearchState<T> extends State<SearchWidget<T>> {
   Widget build(BuildContext context) {
     listContainerHeight =
         widget.listContainerHeight ?? MediaQuery.of(context).size.height / 4;
-    textField = widget.textFieldBuilder != null
-        ? widget.textFieldBuilder(_controller, _focusNode)
-        : Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-            child: TextField(
-              controller: _controller,
-              focusNode: _focusNode,
-              style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-              decoration: InputDecoration(
-                enabledBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Color(0x4437474F),
-                  ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
-                suffixIcon: Icon(Icons.search),
-                border: InputBorder.none,
-                hintText: "Search here...",
-                contentPadding: const EdgeInsets.only(
-                  left: 16,
-                  right: 20,
-                  top: 14,
-                  bottom: 14,
-                ),
-              ),
-            ),
-          );
+    textField = widget.textFieldBuilder != null ?widget.textFieldBuilder(_controller, _focusNode) :Container(
+      margin: EdgeInsets.all(kDefaultPadding),
+      padding: EdgeInsets.symmetric(
+        horizontal: kDefaultPadding,
+        vertical: kDefaultPadding / 4,
+      ),
+      decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.4),
+          borderRadius: BorderRadius.circular(20.0)
+      ),
+      child: TextField(
+        controller: _controller,
+        focusNode: _focusNode,
+        style: TextStyle(color: Colors.white),
+        decoration: InputDecoration(
+          enabledBorder: InputBorder.none,
+          focusedBorder: InputBorder.none,
+          icon: Icon(
+            Icons.search,
+            color: Colors.white,
+          ),
+          border: InputBorder.none,
+          hintText: 'Search',
+          hintStyle: TextStyle(color: Colors.white),
+//          contentPadding: const EdgeInsets.only(
+//            left: 16,
+//            right: 20,
+//            top: 14,
+//            bottom: 14,
+//          ),
+        ),
+      ),
+    );
 
     final column = Column(
       mainAxisSize: MainAxisSize.min,
@@ -239,7 +243,7 @@ class MySingleChoiceSearchState<T> extends State<SearchWidget<T>> {
       builder: (context) {
         final height = MediaQuery.of(context).size.height;
         return Positioned(
-          left: position.left,
+          left: position.top,
           width: width,
           child: CompositedTransformFollower(
             offset: Offset(
