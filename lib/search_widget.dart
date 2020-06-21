@@ -5,8 +5,6 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
 import 'widget/no_item_found.dart';
 
-const kDefaultPadding = 20.0;
-
 typedef QueryListItemBuilder<T> = Widget Function(T item);
 typedef OnItemSelected<T> = void Function(T item);
 typedef SelectedItemBuilder<T> = Widget Function(
@@ -32,6 +30,7 @@ class SearchWidget<T> extends StatefulWidget {
     this.onItemSelected,
     this.hideSearchBoxWhenItemSelected = false,
     this.listContainerHeight,
+    this.padding,
     this.noItemsFoundWidget,
     this.textFieldBuilder,
   }) : super(key: key);
@@ -41,6 +40,7 @@ class SearchWidget<T> extends StatefulWidget {
   final SelectedItemBuilder<T> selectedItemBuilder;
   final bool hideSearchBoxWhenItemSelected;
   final double listContainerHeight;
+  final double padding;
   final QueryBuilder<T> queryBuilder;
   final TextFieldBuilder textFieldBuilder;
   final Widget noItemsFoundWidget;
@@ -63,6 +63,7 @@ class MySingleChoiceSearchState<T> extends State<SearchWidget<T>> {
   OverlayEntry overlayEntry;
   bool showTextBox = false;
   double listContainerHeight;
+  double padding;
   final LayerLink _layerLink = LayerLink();
   final double textBoxHeight = 48;
 
@@ -144,10 +145,10 @@ class MySingleChoiceSearchState<T> extends State<SearchWidget<T>> {
     listContainerHeight =
         widget.listContainerHeight ?? MediaQuery.of(context).size.height / 4;
     textField = widget.textFieldBuilder != null ?widget.textFieldBuilder(_controller, _focusNode) :Container(
-      margin: EdgeInsets.all(kDefaultPadding),
+      margin: EdgeInsets.all(padding),
       padding: EdgeInsets.symmetric(
-        horizontal: kDefaultPadding,
-        vertical: kDefaultPadding / 4,
+        horizontal: padding,
+        vertical: padding / 4,
       ),
       decoration: BoxDecoration(
           color: Colors.white.withOpacity(0.4),
